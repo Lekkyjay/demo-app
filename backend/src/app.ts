@@ -1,13 +1,15 @@
 import express from 'express'
-import cors from 'cors'
+// import cors from 'cors'
 import productRoutes from './routes/products'
 import categoryRoutes from './routes/categories'
 import { healthCheck } from './controllers/health-check'
+import { logger } from './middlewares/logger'
 
 const app = express()
 
+app.use(logger)
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
 
 app.get('/api/hello', (req, res) => {
   res.send('Hello World!')
