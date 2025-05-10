@@ -7,7 +7,7 @@ services:
     depends_on:
       - backend
     env_file:
-      - ./.env
+      - ./.env-dev
     volumes:
       - /app/node_modules
       - ./frontend/src:/app/src:ro
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile-dev
     container_name: backend-c
     env_file:
-      - ./.env
+      - ./.env-dev
     networks:
       - devops-demo-network
     develop:
