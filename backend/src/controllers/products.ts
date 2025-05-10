@@ -10,7 +10,7 @@ const customResponse = (res: Response, status: number, message: string, data = n
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await pool.query(`
-      SELECT p.name, p.price, c.name AS category FROM products p
+      SELECT p.id, p.name, p.price, c.name AS category FROM products p
       JOIN categories c ON p.categoryId = c.id
     `)
     res.json(result.rows)
