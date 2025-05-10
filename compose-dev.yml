@@ -1,0 +1,40 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-dev
+    container_name: frontend-c
+    depends_on:
+      - backend
+    env_file:
+      - ./.env
+    ports:
+      - ${VITE_PORT}:${VITE_PORT}
+    volumes:
+      - /app/node_modules
+      - ./frontend/src:/app/src:ro
+    networks:
+      - devops-demo-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
+    container_name: backend-c
+    env_file:
+      - ./.env
+    networks:
+      - devops-demo-network
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./pnpm-lock.yaml
+          action: rebuild
+        - path: ./backend/src
+          target: /app/src
+          action: sync        
+
+networks:
+  devops-demo-network:
+    driver: bridge
