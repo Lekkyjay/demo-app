@@ -1,0 +1,28 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup:dev": "ts-node setup-dev.ts",
+    "setup:dev-down": "ts-node setup-dev-down.ts",
+    "setup:dev-nginx": "ts-node setup-dev-nginx.ts",
+    "setup:dev-nginx-down": "ts-node setup-dev-nginx-down.ts",
+    "setup:prod": "ts-node setup-prod.ts",
+    "setup:prod-down": "ts-node setup-prod-down.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "@types/shelljs": "^0.8.16",
+    "dotenv": "^16.5.0",
+    "shelljs": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

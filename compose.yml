@@ -2,7 +2,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
+      dockerfile: ./frontend/Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL}
     container_name: frontend-c
@@ -19,8 +19,11 @@ services:
     build:
       context: ./backend
     container_name: backend-c
-    env_file:
-      - ./.env
+    environment:      # env variables are loaded by dotenv in scripts/setup-prod.ts
+      - DATABASE_URL=$DATABASE_URL
+      - PORT=$PORT      
+    # env_file:
+    #   - ./.env
     networks:
       - devops-demo-network   
 
