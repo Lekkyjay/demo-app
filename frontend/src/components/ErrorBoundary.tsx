@@ -9,8 +9,9 @@ export default function ErrorBoundary() {
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <Navbar />
       <main className="p-6">
-        <h1><b>Error Message: </b>{error.message}</h1>
-        <pre><b>Error Status: </b> {error.status} - {error.statusText}</pre>
+        <h1 className='text-2xl mb-2'>Something went wrong 😬</h1>
+        <pre><b>Error Message:</b> {error.message} </pre>
+        <pre><b>Error Status:</b> {error.status} - {error.statusText} </pre>
       </main>
     </div>
   )

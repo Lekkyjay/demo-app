@@ -15,3 +15,13 @@ export interface IError {
   status: string
   statusText: string
 }
+
+export type User = {
+  id: number
+  name: string
+  email: string
+}
+
+export interface IProduct {
+  name: string;
+}

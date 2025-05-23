@@ -22,6 +22,10 @@ export default function Products() {
     }
   }
 
+  if (paginatedProducts.length === 0) {
+    return <div>No products available.</div>
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">

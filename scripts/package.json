@@ -9,7 +9,8 @@
     "setup:dev-nginx": "ts-node setup-dev-nginx.ts",
     "setup:dev-nginx-down": "ts-node setup-dev-nginx-down.ts",
     "setup:prod": "ts-node setup-prod.ts",
-    "setup:prod-down": "ts-node setup-prod-down.ts"
+    "setup:prod-down": "ts-node setup-prod-down.ts",
+    "test": "ts-node test-runners.ts"
   },
   "keywords": [],
   "author": "",
