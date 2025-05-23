@@ -18,29 +18,34 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
+      - name: Verify pnpm installation
+        run: |
+          which pnpm
+          pnpm --version
+
       # - name: Setup pnpm
       #   uses: pnpm/action-setup@v2
       #   with:
       #     version: 8
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      # - name: Install pnpm
+      #   run: npm install -g pnpm
 
-      - name: Install backend dependencies
-        working-directory: backend
-        run: pnpm install
-
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: pnpm install
-
-      # - name: Run backend tests
+      # - name: Install backend dependencies
       #   working-directory: backend
-      #   run: pnpm run test
+      #   run: pnpm install
 
-      - name: Run frontend tests
-        working-directory: frontend
-        run: pnpm test
+      # - name: Install frontend dependencies
+      #   working-directory: frontend
+      #   run: pnpm install
+
+      # # - name: Run backend tests
+      # #   working-directory: backend
+      # #   run: pnpm run test
+
+      # - name: Run frontend tests
+      #   working-directory: frontend
+      #   run: pnpm test
 
 
 # jobs:
