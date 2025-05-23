@@ -4,33 +4,70 @@ on:
   [workflow_dispatch]
 
 jobs:
-  test-frontend:
+  test:
+    name: Run Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend/
-    
-    strategy:
-      matrix:
-        node-version: [22.x]
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4      
-      
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          version: 10
-      
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
           cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pnpm install
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: pnpm install
+
+      # - name: Run backend tests
+      #   working-directory: backend
+      #   run: pnpm run test
+
+      - name: Run frontend tests
+        working-directory: frontend
+        run: pnpm test
+
+
+# jobs:
+#   test-frontend:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: ./frontend/
+    
+#     strategy:
+#       matrix:
+#         node-version: [22.x]
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4      
       
-      - name: "Install Dependencies"
-        run: pnpm i
+#       - name: Install pnpm
+#         uses: pnpm/action-setup@v4
+#         with:
+#           version: 10
+      
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: 'pnpm'
+      
+#       - name: "Install Dependencies"
+#         run: pnpm i
 
 
 
@@ -59,8 +96,8 @@ jobs:
       # - name: Install pnpm
       #   run: npm install -g pnpm
 
-      - name: Test Frontend Code
-        run: pnpm test
+      # - name: Test Frontend Code
+      #   run: pnpm test
         # working-directory: frontend
 
       # - name: Test Backend Code
