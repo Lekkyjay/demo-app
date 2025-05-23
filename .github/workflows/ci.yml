@@ -8,23 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+        uses: actions/checkout@v4      
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
+          # cache-dependency-path: frontend/pnpm-lock.yaml
           node-version: 22
           cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+        # uses: pnpm/action-setup@v4
+        # with:
+        #   version: 10
+      
       - name: "Install Frontend Dependencies"
-        run: |
-          cd frontend
-          pnpm i
+        run: pnpm i
+        working-directory: frontend
 
       # - name: Set up Node.js
       #   uses: actions/setup-node@v3
@@ -36,9 +37,8 @@ jobs:
       #   run: npm install -g pnpm
 
       - name: Test Frontend Code
-        run: |
-          cd frontend
-          pnpm test
+        run: pnpm test
+        working-directory: frontend
 
       # - name: Test Backend Code
       #   run: |
@@ -52,26 +52,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+        # uses: pnpm/action-setup@v4
+        # with:
+        #   version: 10     
+
       - name: "Install Frontend Dependencies"
-        run: |
-          cd frontend
-          pnpm i
+        run: pnpm i
+        working-directory: frontend
       
       - name: "Install Backend Dependencies"
-        run: |
-          cd backend
-          pnpm i
+        run: pnpm i
+        working-directory: backend
 
       # - name: Set up Node.js
       #   uses: actions/setup-node@v3
