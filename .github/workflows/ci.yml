@@ -9,6 +9,9 @@ jobs:
     strategy:
       matrix:
         node-version: [20]
+    defaults:
+      run:
+        working-directory: frontend
     steps:
     - uses: actions/checkout@v4
     - name: Install pnpm
@@ -18,13 +21,19 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
-        cache-dependency-path: frontend/pnpm-lock.yaml
+        # cache-dependency-path: frontend/pnpm-lock.yaml
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-    - name: Verify pnpm installation
-      run: |
-        which pnpm
-        pnpm --version
+    - name: "Install Dependencies"
+      run: pnpm i
+
+    - name: "Build command"
+      run: pnpm build
+    
+    # - name: Verify pnpm installation
+    #   run: |
+    #     which pnpm
+    #     pnpm --version
 
 
 
