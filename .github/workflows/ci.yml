@@ -1,163 +1,34 @@
-name: CI/CD Pipeline
+name: Test and Build
 
 on:
-  [workflow_dispatch]
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: [20]
-    defaults:
-      run:
-        working-directory: ./frontend
+  setup:
+    name: Setup Dependencies
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        # cache-dependency-path: frontend/pnpm-lock.yaml
-        node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'
-    - name: "Install Dependencies"
-      run: pnpm i
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: "Build command"
-      run: pnpm build
-    
-    # - name: Verify pnpm installation
-    #   run: |
-    #     which pnpm
-    #     pnpm --version
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
 
+      - name: Install Dependencies for Frontend
+        working-directory: ./frontend
+        run: pnpm install
 
-#   test:
-#     name: Run Tests
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Setup Node.js
-#         uses: actions/checkout@v4
-      
-#       - name: Install pnpm
-#         uses: pnpm/action-setup@v4
-#         with:
-#           version: 10
-      
-#       - name: Use Node.js 22
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 22
-#           cache: 'pnpm'
-
-#       # - name: Checkout code
-#       #   uses: actions/checkout@v3
-
-#       # - name: Setup Node.js
-#       #   uses: actions/setup-node@v3
-#       #   with:
-#       #     node-version: 22
-#       #     cache: 'pnpm'
-
-#       - name: Verify pnpm installation
-#         run: |
-#           which pnpm
-#           pnpm --version
-
-#       # - name: Setup pnpm
-#       #   uses: pnpm/action-setup@v2
-#       #   with:
-#       #     version: 8
-
-#       # - name: Install pnpm
-#       #   run: npm install -g pnpm
-
-#       # - name: Install backend dependencies
-#       #   working-directory: backend
-#       #   run: pnpm install
-
-#       # - name: Install frontend dependencies
-#       #   working-directory: frontend
-#       #   run: pnpm install
-
-#       # # - name: Run backend tests
-#       # #   working-directory: backend
-#       # #   run: pnpm run test
-
-#       # - name: Run frontend tests
-#       #   working-directory: frontend
-#       #   run: pnpm test
-
-
-# # jobs:
-# #   test-frontend:
-# #     runs-on: ubuntu-latest
-# #     defaults:
-# #       run:
-# #         working-directory: ./frontend/
-    
-# #     strategy:
-# #       matrix:
-# #         node-version: [22.x]
-
-# #     steps:
-# #       - name: Checkout Code
-# #         uses: actions/checkout@v4      
-      
-# #       - name: Install pnpm
-# #         uses: pnpm/action-setup@v4
-# #         with:
-# #           version: 10
-      
-# #       - name: Use Node.js ${{ matrix.node-version }}
-# #         uses: actions/setup-node@v4
-# #         with:
-# #           node-version: ${{ matrix.node-version }}
-# #           cache: 'pnpm'
-      
-# #       - name: "Install Dependencies"
-# #         run: pnpm i
-
-
-
-#       # - name: Set up Node.js
-#       #   uses: actions/setup-node@v4
-#       #   with:
-#       #     node-version: 22
-#       #     cache: 'pnpm'
-
-#       # - name: Install pnpm
-#       #   # run: npm install -g pnpm
-#       #   uses: pnpm/action-setup@v4
-#       #   with:
-#       #     version: 10
-      
-#       # - name: "Install Frontend Dependencies"
-#       #   run: pnpm i
-#         # working-directory: frontend
-
-#       # - name: Set up Node.js
-#       #   uses: actions/setup-node@v3
-#       #   with:
-#       #     node-version: 22
-#       #     cache: 'pnpm'
-
-#       # - name: Install pnpm
-#       #   run: npm install -g pnpm
-
-#       # - name: Test Frontend Code
-#       #   run: pnpm test
-#         # working-directory: frontend
-
-#       # - name: Test Backend Code
-#       #   run: |
-#       #     cd backend
-#       #     pnpm test
+      - name: Install Dependencies for Backend
+        working-directory: ./backend
+        run: pnpm install
 
   
