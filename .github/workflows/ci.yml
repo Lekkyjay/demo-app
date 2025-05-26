@@ -105,6 +105,7 @@ jobs:
 
   frontend-build-and-push-image:
     name: Build and Push Frontend Image
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -133,6 +134,7 @@ jobs:
 
   backend-build-and-push-image:
     name: Build and Push Backend Image
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
