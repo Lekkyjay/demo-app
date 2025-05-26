@@ -68,32 +68,32 @@ jobs:
         working-directory: ./backend
         run: pnpm test
 
-  # build:
-  #   name: Build Project
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v3
+  build:
+    name: Build Project
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '22'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
 
-  #     - name: Install pnpm
-  #       run: npm install -g pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-  #     - name: Debug PNPM
-  #       run: pnpm --version
+      - name: Debug PNPM
+        run: pnpm --version
 
-  #     - name: Build Frontend
-  #       working-directory: ./frontend
-  #       run: pnpm build
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: pnpm build
 
-  #     - name: Build Backend
-  #       working-directory: ./backend
-  #       run: pnpm build
+      - name: Build Backend
+        working-directory: ./backend
+        run: pnpm build
 
   # frontend-build-and-push-image:
   #   name: Build and Push Frontend Image
