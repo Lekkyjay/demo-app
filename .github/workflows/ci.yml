@@ -57,7 +57,7 @@ jobs:
         run: pnpm install
 
       - name: Run Tests for Frontend
-        # working-directory: ./frontend
+        working-directory: ./frontend
         run: pnpm test
       
       - name: Install Dependencies for Backend
@@ -65,7 +65,7 @@ jobs:
         run: pnpm install
 
       - name: Run Tests for Backend
-        # working-directory: ./backend
+        working-directory: ./backend
         run: pnpm test
 
   # build:
