@@ -2,7 +2,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend/Dockerfile-prod
       args:
         VITE_API_URL: ${VITE_API_URL}
     container_name: frontend-c
