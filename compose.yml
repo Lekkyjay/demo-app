@@ -1,29 +1,20 @@
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile-prod
-      args:
-        VITE_API_URL: ${VITE_API_URL}
+    image: lekky/devops-demo-frontend:latest
+    restart: always
     container_name: frontend-c
-    depends_on:
-      - backend
-    env_file:
-      - ./.env
+    ports:
+      - "8080:80"    
     networks:
       - devops-demo-network
-    ports:
-      - 8080:80
-
+    
   backend:
-    build:
-      context: ./backend
+    image: lekky/devops-demo-backend:latest
+    restart: always
     container_name: backend-c
-    environment:      # env variables are loaded by dotenv in scripts/setup-prod.ts
+    environment:
       - DATABASE_URL=$DATABASE_URL
       - PORT=$PORT      
-    # env_file:
-    #   - ./.env
     networks:
       - devops-demo-network   
 

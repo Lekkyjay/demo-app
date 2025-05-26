@@ -1,0 +1,32 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile-prod
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    container_name: frontend-c
+    depends_on:
+      - backend
+    env_file:
+      - ./.env
+    networks:
+      - devops-demo-network
+    ports:
+      - 8080:80
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend-c
+    environment:      # env variables are loaded by dotenv in scripts/setup-prod.ts
+      - DATABASE_URL=$DATABASE_URL
+      - PORT=$PORT      
+    # env_file:
+    #   - ./.env
+    networks:
+      - devops-demo-network   
+
+networks:
+  devops-demo-network:
+    driver: bridge
