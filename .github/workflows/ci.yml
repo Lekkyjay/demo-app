@@ -86,10 +86,18 @@ jobs:
 
       - name: Debug PNPM
         run: pnpm --version
+      
+      - name: Install Dependencies for Frontend
+        working-directory: ./frontend
+        run: pnpm install
 
       - name: Build Frontend
         working-directory: ./frontend
         run: pnpm build
+
+      - name: Install Dependencies for Backend
+        working-directory: ./backend
+        run: pnpm install
 
       - name: Build Backend
         working-directory: ./backend
