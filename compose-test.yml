@@ -1,0 +1,52 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-dev
+    container_name: frontend-c
+    depends_on:
+      - backend
+    ports:
+      - ${VITE_PORT}:${VITE_PORT}
+    volumes:
+      - /app/node_modules
+      - ./frontend/src:/app/src:ro
+    networks:
+      - devops-demo-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
+    container_name: backend-c
+    environment:
+      - DATABASE_URL=$DATABASE_URL
+      - PORT=$PORT      
+    networks:
+      - devops-demo-network
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./pnpm-lock.yaml
+          action: rebuild
+        - path: ./backend/src
+          target: /app/src
+          action: sync        
+  
+  postgres:
+    image: postgres:17.4-alpine3.21
+    container_name: pg-c
+    restart: always
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    networks:
+      - devops-demo-network
+    volumes:
+      - ./testdb-seed.sql:/docker-entrypoint-initdb.d/testdb-seed.sql      
+
+networks:
+  devops-demo-network:
+    driver: bridge
