@@ -37,6 +37,20 @@ jobs:
     name: Run Tests
     needs: setup
     runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+    
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test123
+          POSTGRES_DB: testdb
+        ports:
+          - "5432:5432"
+    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

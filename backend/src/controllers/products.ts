@@ -8,6 +8,7 @@ const customResponse = (res: Response, status: number, message: string, data = n
 
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('products.......................called!')
   try {
     const result = await pool.query(`
       SELECT p.id, p.name, p.price, c.name AS category FROM products p
@@ -44,15 +45,15 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 }
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, price, categoryId } = req.body
-  if (!name || !price || !categoryId) {
+  const { name, price, categoryid } = req.body
+  if (!name || !price || !categoryid) {
     res.sendStatus(400)
     return
   }
 
   try {    
     const result = await pool.query(
-      'INSERT INTO products (name, price, category_id) VALUES ($1, $2, $3) RETURNING *', [name, price, categoryId]
+      'INSERT INTO products (name, price, categoryid) VALUES ($1, $2, $3) RETURNING *', [name, price, categoryid]
     )
 
     res.status(201).json(result.rows[0])
